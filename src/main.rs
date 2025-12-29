@@ -10,12 +10,17 @@ use ratatui::{
 };
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let fg_color = if std::env::args().nth(1).unwrap_or("default".to_owned()) == "color" {
+        Color::LightBlue
+    } else {
+        Color::Reset
+    };
     let mut exit = false;
     let mut popup = false;
 
     ratatui::run(|terminal| {
         while !exit {
-            terminal.draw(|frame| render(frame, popup))?;
+            terminal.draw(|frame| render(frame, &fg_color, popup))?;
 
             // Wait for an event
             let event = crossterm::event::read().unwrap();
@@ -38,11 +43,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 
 #[rustfmt::skip]
-pub fn render(frame: &mut Frame, popup: bool) {
+pub fn render(frame: &mut Frame, fg_color: &Color, popup: bool) {
     frame.render_widget(
-        Paragraph::new("TEST\n123456789")
+        Paragraph::new("Now, press 'd' to render the popup\n(press 'q' or 'Esc' to quit)")
             .block(Block::default().borders(Borders::ALL).border_type(Rounded))
-            .fg(Color::LightBlue) // If this line is commented, render_popup() is ok!
+            .fg(*fg_color)
         ,frame.area(),
     );
 
