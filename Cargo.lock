@@ -834,6 +834,7 @@ checksum = "ec0be4795e2f6a28069bec0b5ff3e2ac9bafc99e6a9a7dc3547996c5c816922c"
 [[package]]
 name = "ratatui"
 version = "0.30.0"
+source = "git+https://github.com/ratatui/ratatui.git#f9d066f4d74684bb13fbbac6c02fb1178d9c0b15"
 dependencies = [
  "instability",
  "ratatui-core",
@@ -846,6 +847,7 @@ dependencies = [
 [[package]]
 name = "ratatui-core"
 version = "0.1.0"
+source = "git+https://github.com/ratatui/ratatui.git#f9d066f4d74684bb13fbbac6c02fb1178d9c0b15"
 dependencies = [
  "bitflags 2.10.0",
  "compact_str",
@@ -864,6 +866,7 @@ dependencies = [
 [[package]]
 name = "ratatui-crossterm"
 version = "0.1.0"
+source = "git+https://github.com/ratatui/ratatui.git#f9d066f4d74684bb13fbbac6c02fb1178d9c0b15"
 dependencies = [
  "cfg-if",
  "crossterm",
@@ -874,6 +877,7 @@ dependencies = [
 [[package]]
 name = "ratatui-macros"
 version = "0.7.0"
+source = "git+https://github.com/ratatui/ratatui.git#f9d066f4d74684bb13fbbac6c02fb1178d9c0b15"
 dependencies = [
  "ratatui-core",
  "ratatui-widgets",
@@ -889,6 +893,7 @@ dependencies = [
 [[package]]
 name = "ratatui-termwiz"
 version = "0.1.0"
+source = "git+https://github.com/ratatui/ratatui.git#f9d066f4d74684bb13fbbac6c02fb1178d9c0b15"
 dependencies = [
  "ratatui-core",
  "termwiz",
@@ -897,6 +902,7 @@ dependencies = [
 [[package]]
 name = "ratatui-widgets"
 version = "0.3.0"
+source = "git+https://github.com/ratatui/ratatui.git#f9d066f4d74684bb13fbbac6c02fb1178d9c0b15"
 dependencies = [
  "bitflags 2.10.0",
  "hashbrown",

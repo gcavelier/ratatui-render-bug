@@ -1,25 +1,41 @@
 use ratatui::buffer::Buffer;
-use ratatui::layout::Rect;
-use ratatui::style::Style;
+use ratatui::style::{Color, Stylize};
 use ratatui::text::Line;
-use ratatui::widgets::Widget;
 
 fn main() {
-    let area = Rect::new(0, 0, 20, 1);
+    let prev_no_color = Buffer::with_lines([Line::from("   ")]);
+    let prev_with_color = Buffer::with_lines([Line::from("   ").fg(Color::Red)]);
+    let next = Buffer::with_lines([Line::from("⚠️")]);
 
-    // Previous buffer with content (simulating a list view)
-    let mut prev_buf = Buffer::empty(area);
-    prev_buf.set_string(0, 0, "NAME                ", Style::default());
+    let diff = prev_no_color.diff(&next);
 
-    // New buffer with VS16 emoji (simulating a popup)
-    let mut next_buf = Buffer::empty(area);
-    Line::from(" ⚠️ Title ").render(area, &mut next_buf); // ⚠️ = U+26A0 + U+FE0F
-
-    let diff = prev_buf.diff(&next_buf);
-
-    // BUG: diff contains update for position 2 with " " which overwrites
-    // the right half of the wide emoji at position 1
+    println!("diff with prev_no_color:");
     for (x, y, cell) in &diff {
-        println!("({}, {}): {:?}", x, y, cell.symbol());
+        println!("({}, {}): {:?}", x, y, cell);
     }
+
+    assert!(
+        !diff.iter().any(|(x, y, _)| *x == 1 && *y == 0),
+        "Diff should not include trailing cell (1,0) when only style changed. \
+            Found updates: {:?}",
+        diff.iter()
+            .map(|(x, y, c)| (x, y, c.symbol(), c.fg))
+            .collect::<Vec<_>>()
+    );
+
+    let diff = prev_with_color.diff(&next);
+
+    println!("\n\ndiff with prev_with_color:");
+    for (x, y, cell) in &diff {
+        println!("({}, {}): {:?}", x, y, cell);
+    }
+
+    assert!(
+        !diff.iter().any(|(x, y, _)| *x == 1 && *y == 0),
+        "Diff should not include trailing cell (1,0) when only style changed. \
+            Found updates: {:?}",
+        diff.iter()
+            .map(|(x, y, c)| (x, y, c.symbol(), c.fg))
+            .collect::<Vec<_>>()
+    );
 }

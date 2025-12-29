@@ -4,4 +4,4 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-ratatui = { path = "./ratatui/ratatui" }
+ratatui = { git = "https://github.com/ratatui/ratatui.git" }
