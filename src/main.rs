@@ -54,7 +54,7 @@ pub fn render(frame: &mut Frame, fg_color: &Color, popup: bool) {
     if popup {
         render_popup(
             frame,
-            "⚠️ Test ⚠️",
+            "⚠️Test⚠️",
             Paragraph::new(format!("message 0123456798 message")),
         );
     }
