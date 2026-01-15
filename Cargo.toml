@@ -5,3 +5,4 @@ edition = "2024"
 
 [dependencies]
 ratatui = { git = "https://github.com/ratatui/ratatui.git" }
+#ratatui = { git = "https://github.com/gcavelier/ratatui.git", branch = "fix-buffer-diff-vs16" }
