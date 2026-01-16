@@ -10,11 +10,7 @@ use ratatui::{
 };
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let fg_color = if std::env::args().nth(1).unwrap_or("default".to_owned()) == "color" {
-        Color::LightBlue
-    } else {
-        Color::Reset
-    };
+    let mut fg_color = Color::Reset;
     let mut exit = false;
     let mut popup = false;
 
@@ -31,6 +27,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         match key_event.code {
                             KeyCode::Char('q') | KeyCode::Esc => exit = true,
                             KeyCode::Char('d') => popup = true,
+                            KeyCode::Char('c') => {
+                                fg_color = match fg_color {
+                                    Color::Reset => Color::Red,
+                                    _ => Color::Reset,
+                                };
+                                popup = false;
+                            }
                             _ => (),
                         }
                     }
@@ -45,7 +48,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 #[rustfmt::skip]
 pub fn render(frame: &mut Frame, fg_color: &Color, popup: bool) {
     frame.render_widget(
-        Paragraph::new("Now, press 'd' to render the popup\n(press 'q' or 'Esc' to quit)")
+        Paragraph::new("1. press 'd' to render the popup\n\
+         2. press 'c' to change the Paragraph fg color (and remove the popup)\n\
+         3. press 'd' again to render the popup\n\n\
+         The popup title shouldn't contain *any* space character\n\n\
+        (press 'q' or 'Esc' to quit)")
             .block(Block::default().borders(Borders::ALL).border_type(Rounded))
             .fg(*fg_color)
         ,frame.area(),
@@ -61,7 +68,7 @@ pub fn render(frame: &mut Frame, fg_color: &Color, popup: bool) {
 }
 
 fn render_popup(frame: &mut Frame, title: &str, msg: Paragraph) {
-    let area = Rect::new(3, 3, 30, 5);
+    let area = Rect::new(3, 9, 30, 5);
 
     let top_block = Block::default()
         .title(title)
